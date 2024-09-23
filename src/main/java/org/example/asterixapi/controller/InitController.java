@@ -32,7 +32,8 @@ public class InitController {
                 new Character("7", "Idefix", 5, "Hund"),
                 new Character("8", "Geriatrix", 70, "Rentner"),
                 new Character("9", "Automatix", 35, "Schmied"),
-                new Character("10", "Grockelix", 35, "Fischer")
+                new Character("10", "Grockelix", 35, "Fischer"),
+                new Character("11", "Psinix", 15, "Hund")
         );
     }
 }

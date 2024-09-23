@@ -1,5 +1,6 @@
 package org.example.asterixapi.controller;
 
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.AllArgsConstructor;
 import org.example.asterixapi.model.Character;
 import org.example.asterixapi.repository.CharacterRepository;
@@ -46,8 +47,8 @@ public class CharacterController {
         return characterRepository.save(character);
     }
 
-//    @GetMapping("/profession/${profession}")
-//    public List<Character> getProfession(@PathVariable String profession) {
-//
-//    }
+    @GetMapping("/profession/{profession}")
+    public Double getAverageAgeByProfession(@PathVariable String profession) {
+        return this.characterRepository.getAverageAgeByProfession(profession);
+    }
 }
