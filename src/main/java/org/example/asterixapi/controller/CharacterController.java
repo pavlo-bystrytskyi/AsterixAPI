@@ -35,9 +35,8 @@ public class CharacterController {
     @PostMapping
     public ObjectIdResponse createCharacter(@RequestBody CharacterRequest characterRequest) {
         CharacterModel characterModel = characterRequest.toModel();
-        characterService.addCharacter(characterModel);
 
-        return ObjectIdResponse.fromCharacter(characterModel);
+        return ObjectIdResponse.fromCharacter(characterService.addCharacter(characterModel));
     }
 
     @PutMapping("/{id}")
