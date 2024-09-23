@@ -1,12 +1,12 @@
 package org.example.asterixapi.repository;
 
-import org.example.asterixapi.model.Character;
+import org.example.asterixapi.model.CharacterModel;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CharacterRepository extends MongoRepository<Character, String> {
+public interface CharacterRepository extends MongoRepository<CharacterModel, String> {
 
     @Aggregation(
             pipeline = {
