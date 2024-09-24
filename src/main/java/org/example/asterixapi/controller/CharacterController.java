@@ -58,6 +58,9 @@ public class CharacterController {
     @GetMapping("/profession/{profession}")
     public AverageResponse getAverageAgeByProfession(@PathVariable String profession) {
         Double average = this.characterService.getAverageAgeByProfession(profession);
+        if (average == null) {
+            average = 0.0;
+        }
 
         return new AverageResponse(profession, average);
     }

@@ -44,7 +44,6 @@ class CharacterServiceTest {
         verifyNoMoreInteractions(repository);
     }
 
-
     @Test
     void deleteCharacter_existingCharacter() {
         String id = "123";
