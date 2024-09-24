@@ -3,6 +3,7 @@ package org.example.asterixapi.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.asterixapi.model.CharacterModel;
 import org.example.asterixapi.repository.CharacterRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +17,11 @@ public class InitController {
     private final CharacterRepository characterRepository;
 
     @PostMapping
-    public void initialize() {
+    public ResponseEntity initialize() {
         characterRepository.deleteAll();
         characterRepository.saveAll(this.getCharacters());
+
+        return ResponseEntity.ok().build();
     }
 
     private List<CharacterModel> getCharacters() {

@@ -24,13 +24,21 @@ public class CharacterService {
 
     public CharacterModel updateCharacter(String id, CharacterModel characterModel) {
         if (id == null || !characterRepository.existsById(id)) {
-            throw new IllegalArgumentException("Character with id " + characterModel.id() + " does not exist");
+            throw new IllegalArgumentException("Character with id " + id + " does not exist");
         }
 
         return characterRepository.save(characterModel.withId(id));
     }
 
-    public List<CharacterModel> getAll(String id, String name, Integer age, String profession) {
+    public void deleteCharacter(String id) {
+        if (id == null || !characterRepository.existsById(id)) {
+            throw new IllegalArgumentException("Character with id " + id + " does not exist");
+        }
+
+        characterRepository.deleteById(id);
+    }
+
+    public List<CharacterModel> getCharacters(String id, String name, Integer age, String profession) {
         Example<CharacterModel> example = Example.of(
                 new CharacterModel(
                         id,
