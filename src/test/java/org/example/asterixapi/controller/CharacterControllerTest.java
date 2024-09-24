@@ -2,6 +2,8 @@ package org.example.asterixapi.controller;
 
 import org.example.asterixapi.model.CharacterModel;
 import org.example.asterixapi.repository.CharacterRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,23 @@ import static org.mockito.Mockito.mockStatic;
 @SpringBootTest
 @AutoConfigureMockMvc
 class CharacterControllerTest {
-
     @Autowired
     MockMvc mvc;
 
     @Autowired
     CharacterRepository repository;
+
+    private MockedStatic<UUID> uuidStatic;
+
+    @BeforeEach
+    public void setUp() {
+        uuidStatic = mockStatic(UUID.class);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        uuidStatic.close();
+    }
 
     @Test
     @DirtiesContext
