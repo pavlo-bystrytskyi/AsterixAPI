@@ -2,8 +2,6 @@ package org.example.asterixapi.controller;
 
 import org.example.asterixapi.model.CharacterModel;
 import org.example.asterixapi.repository.CharacterRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,60 +26,48 @@ import static org.mockito.Mockito.mockStatic;
 @AutoConfigureMockMvc
 class CharacterControllerTest {
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @Autowired
-    CharacterRepository repository;
-
-    private MockedStatic<UUID> uuidStatic;
-
-    @BeforeEach
-    public void setUp() {
-        uuidStatic = mockStatic(UUID.class);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        uuidStatic.close();
-    }
+    private CharacterRepository repository;
 
     @Test
     @DirtiesContext
     void createCharacter_successfully() throws Exception {
-        MockedStatic<UUID> uuidStatic = mockStatic(UUID.class);
-        UUID uuid = new UUID(000, 001);
-        uuidStatic.when(UUID::randomUUID).thenReturn(uuid);
-        Example<CharacterModel> example = Example.of(
-                new CharacterModel(
-                        null,
-                        "Gutemine",
-                        null,
-                        null
-                ));
-        List<CharacterModel> expected = List.of(
-                new CharacterModel(
-                        "00000000-0000-0000-0000-000000000001",
-                        "Gutemine",
-                        35,
-                        "Häuptlingsfrau"
-                )
-        );
+        try (MockedStatic<UUID> uuidStatic = mockStatic(UUID.class)) {
+            UUID uuid = new UUID(000, 001);
+            uuidStatic.when(UUID::randomUUID).thenReturn(uuid);
+            Example<CharacterModel> example = Example.of(
+                    new CharacterModel(
+                            null,
+                            "Gutemine",
+                            null,
+                            null
+                    ));
+            List<CharacterModel> expected = List.of(
+                    new CharacterModel(
+                            "00000000-0000-0000-0000-000000000001",
+                            "Gutemine",
+                            35,
+                            "Häuptlingsfrau"
+                    )
+            );
 
-        mvc.perform(MockMvcRequestBuilders.post("/asterix/characters")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                        """
-                                 {
-                                      "name": "Gutemine",
-                                      "age": 35,
-                                      "profession": "Häuptlingsfrau"
-                                 }
-                                """
-                ));
+            mvc.perform(MockMvcRequestBuilders.post("/asterix/characters")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(
+                            """
+                                     {
+                                          "name": "Gutemine",
+                                          "age": 35,
+                                          "profession": "Häuptlingsfrau"
+                                     }
+                                    """
+                    ));
 
-
-        List<CharacterModel> actual = repository.findAll(example);
-        assertEquals(expected, actual);
+            List<CharacterModel> actual = repository.findAll(example);
+            assertEquals(expected, actual);
+        }
     }
 
     @Test
